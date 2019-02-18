@@ -6,7 +6,6 @@ import { Transform } from 'stream'
 const createInjectName = replaceObj =>
   new Transform({
     transform(chunk, encode, done) {
-      console.log('replacement obj', replaceObj)
       this.push( Object.keys(replaceObj).reduce((res, key) =>
           res
           .replace(new RegExp(`%%${key}%%`, 'g'), replaceObj[key])
@@ -63,8 +62,18 @@ const createTemp = (srcDir, distDir, abbrs) => dirOrFileName => {
 }
 
 export default (argv) => {
-  const srcPath = path.resolve(process.cwd(), '.temp')
-  const distPath = path.resolve(process.cwd(), argv.root)
+  const srcPath = path.resolve(process.cwd(), '.temp', argv.temp)
+  const distPath = path.resolve(process.cwd(), argv.root, argv.temp)
+  try {
+    fs.mkdirSync(distPath)
+  }
+  catch (err) {
+    if (err.code === 'EEXIST') {
+      console.log(chalk.red(`Template ${argv.temp} is already exist in '${argv.root}' directory. Creation of template '${argv.temp}' is skipped!`))
+      process.exit(0)
+    }
+  }
+  
   const abbrs = argv.vars.reduce((res, keyValue) => {
     const [ key, value ] = keyValue.split('=')
     if (!value || !key) throw new Error('Invalid arguments')
