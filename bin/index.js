@@ -16,7 +16,12 @@ var argv = require('yargs').demandCommand(1).command('init', 'Initialize templer
     describe: 'Template folder name in .temp',
     type: 'string'
   });
-}).default('r', 'src').alias('r', 'root').describe('r', 'Set base folder of templates to be created.').default('e', 'utf8').alias('r', 'encoding').describe('e', 'Set file encoding.').help().argv;
+  yargs.positional('vars', {
+    describe: 'Variables to be replace in template.',
+    type: 'string'
+  });
+  yargs.example('$0 create temp name=bar foo=ok', 'Create template while temp file has 2 variables: %%name%% and %%foo%%');
+}).example('$0 create temp name=bar foo=ok', 'Create template while temp file has 2 variables: %%name%% and %%foo%%').default('r', 'src').alias('r', 'root').describe('r', 'Set base folder of templates to be created.').default('e', 'utf8').alias('e', 'encoding').describe('e', 'Set file encoding.').help().argv;
 
 console.log(_chalk.default.blue(_figlet.default.textSync('Templer', {})));
 

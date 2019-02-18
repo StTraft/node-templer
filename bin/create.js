@@ -31,11 +31,11 @@ var createInjectName = function createInjectName(replaceObj) {
   return new _stream.Transform({
     transform: function transform(chunk, encode, done) {
       console.log('replacement obj', replaceObj);
-      var replacement = Object.keys(replaceObj).reduce(function (res, key) {
-        return chunk.toString().replace(new RegExp("%%".concat(key, "%%"), 'g'), replaceObj[key]);
-      }, '');
-      console.log('replacement:', replacement);
-      this.push(replacement);
+      this.push(Object.keys(replaceObj).reduce(function (res, key) {
+        return res.replace(new RegExp("%%".concat(key, "%%"), 'g'), replaceObj[key]);
+      }, chunk.toString())); // console.log('replacement:', replacement)
+      // this.push(replacement)
+
       done();
     }
   });

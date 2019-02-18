@@ -12,12 +12,17 @@ const argv = require('yargs')
       describe: 'Template folder name in .temp',
       type: 'string',
     })
+    yargs.positional('vars', {
+      describe: 'Variables to be replace in template.',
+      type: 'string',
+    })
+    yargs.example('$0 create temp name=bar foo=ok', 'Create template while temp file has 2 variables: %%name%% and %%foo%%')
   })
   .default('r', 'src')
   .alias('r', 'root')
   .describe('r', 'Set base folder of templates to be created.')
   .default('e', 'utf8')
-  .alias('r', 'encoding')
+  .alias('e', 'encoding')
   .describe('e', 'Set file encoding.')
   .help()
   .argv

@@ -7,13 +7,11 @@ const createInjectName = replaceObj =>
   new Transform({
     transform(chunk, encode, done) {
       console.log('replacement obj', replaceObj)
-      const replacement = Object.keys(replaceObj).reduce((res, key) =>
-        chunk
-          .toString()
+      this.push( Object.keys(replaceObj).reduce((res, key) =>
+          res
           .replace(new RegExp(`%%${key}%%`, 'g'), replaceObj[key])
-      , '')
-      console.log('replacement:', replacement)
-      this.push(replacement)
+      , chunk.toString()
+      ))
       done()
     }
   })
@@ -75,9 +73,6 @@ export default (argv) => {
       [key]: value
     }
   }, {})
-  console.log('abbrs', abbrs)
-
-  console.log('argv pass in create:', argv)
 
   fs.readdirSync(srcPath).forEach(
     createTemp(srcPath, distPath, {
