@@ -4,6 +4,7 @@
   "description": "template engine for projects.",
   "bin": "./bin/index.js",
   "scripts": {
+    "start": "npm run build && npm uninstall && npm link",
     "build": "./node_modules/.bin/babel ./src --out-dir ./bin/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
