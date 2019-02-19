@@ -6,6 +6,10 @@
   "files": [
     "bin/*"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/StTraft/node-templer.git"
+  },
   "scripts": {
     "start": "npm run build && npm uninstall && npm link",
     "build": "./node_modules/.bin/babel ./src --out-dir ./bin/",
