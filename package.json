@@ -1,6 +1,6 @@
 {
   "name": "node-templer",
-  "version": "0.0.3-alpha",
+  "version": "0.0.3",
   "description": "template engine for projects.",
   "bin": "./bin/index.js",
   "files": [
