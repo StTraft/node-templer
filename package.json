@@ -1,8 +1,11 @@
 {
   "name": "node-templer",
-  "version": "0.0.1",
+  "version": "0.0.3-alpha",
   "description": "template engine for projects.",
   "bin": "./bin/index.js",
+  "files": [
+    "bin/*"
+  ],
   "scripts": {
     "start": "npm run build && npm uninstall && npm link",
     "build": "./node_modules/.bin/babel ./src --out-dir ./bin/",
