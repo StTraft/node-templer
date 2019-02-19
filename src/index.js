@@ -7,16 +7,20 @@ import createTemp from './create'
 const argv = require('yargs')
   .demandCommand(1)
   .command('init', 'Initialize templer to the project.')
-  .command('create <temp> [vars..]', 'Create templates defined in .temp folders.', yargs => {
+  .command('create <temp> <name> [vars..]', 'Create templates defined in .temp folders.', yargs => {
     yargs.positional('temp', {
-      describe: 'Template folder name in .temp',
+      describe: 'Template folder name in .temp. Folder name is used to define the type of template to be created. e.g.: components, controllers.\n\nCaution: There must be a folder with name same as `temp` variable before using this command.',
+      type: 'string',
+    })
+    yargs.positional('name', {
+      describe: 'Name of the template to be created.',
       type: 'string',
     })
     yargs.positional('vars', {
       describe: 'Variables to be replace in template.',
       type: 'string',
     })
-    yargs.example('$0 create temp name=bar foo=ok', 'Create template while temp file has 2 variables: %%name%% and %%foo%%')
+    yargs.example('$0 create components SomeComponent foo=bar dar=far', 'Create template while temp file has 2 variables: %%foo%% and %%dar%%')
   })
   .default('r', 'src')
   .alias('r', 'root')

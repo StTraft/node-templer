@@ -63,9 +63,13 @@ const createTemp = (srcDir, distDir, abbrs) => dirOrFileName => {
 
 export default (argv) => {
   const srcPath = path.resolve(process.cwd(), '.temp', argv.temp)
-  const distPath = path.resolve(process.cwd(), argv.root, argv.temp)
+  const distPath = path.resolve(process.cwd(), argv.root, argv.temp, argv.name)
+  if (!fs.existsSync(srcPath)) {
+    console.log(chalk.red(`Template ${argv.temp} is not exist!\nPlease check templates created in .temp folder.`))
+    process.exit(0)
+  }
   try {
-    fs.mkdirSync(distPath)
+    fs.mkdirSync(distPath, {recursive: true})
   }
   catch (err) {
     if (err.code === 'EEXIST') {
@@ -85,7 +89,7 @@ export default (argv) => {
 
   fs.readdirSync(srcPath).forEach(
     createTemp(srcPath, distPath, {
-      name: argv.temp,
+      name: argv.name,
       ...abbrs,
     })
   )
